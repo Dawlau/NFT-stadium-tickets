@@ -84,7 +84,6 @@ async function sellTicket(i) {
 		}
 	)
 
-	console.log()
 }
 
 const sellTickets = async () => {
@@ -93,10 +92,54 @@ const sellTickets = async () => {
 	}
 }
 
-sellTickets();
+// sellTickets();
 
+const buyTicket = async (i) => {
+	const nonce = await web3.eth.getTransactionCount(PUBLIC_KEY, 'latest');
 
-// function refundTicket(ticketId) {
+	const transaction = {
+		'from': PUBLIC_KEY,
+		'to': ticketsListContractAddress,
+		'nonce': nonce,
+		'gas': 500000,
+		'data': ticketsListContract.methods.buyTicket(PUBLIC_KEY, i).encodeABI()
+	};
 
+	const signedTransaction = await web3.eth.accounts.signTransaction(transaction, PRIVATE_KEY);
 
-// }
+	const receipt = await web3.eth.sendSignedTransaction(
+		signedTransaction.rawTransaction,
+		function(err, hash) {
+			if (err) {
+				console.log("Something went wrong when submitting your transaction:", err)
+			} else {
+				console.log("The hash of your transaction is: ", hash, "\nCheck Alchemy's Mempool to view the status of your transaction!")
+			}
+		}
+	)
+}
+
+const refundTicket = async (i) => {
+	const nonce = await web3.eth.getTransactionCount(PUBLIC_KEY, 'latest');
+
+	const transaction = {
+		'from': PUBLIC_KEY,
+		'to': ticketsListContractAddress,
+		'nonce': nonce,
+		'gas': 500000,
+		'data': ticketsListContract.methods.refundTicket(PUBLIC_KEY, i).encodeABI()
+	};
+
+	const signedTransaction = await web3.eth.accounts.signTransaction(transaction, PRIVATE_KEY);
+
+	const receipt = await web3.eth.sendSignedTransaction(
+		signedTransaction.rawTransaction,
+		function(err, hash) {
+			if (err) {
+				console.log("Something went wrong when submitting your transaction:", err)
+			} else {
+				console.log("The hash of your transaction is: ", hash, "\nCheck Alchemy's Mempool to view the status of your transaction!")
+			}
+		}
+	)
+}
