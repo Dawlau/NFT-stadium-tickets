@@ -8,14 +8,14 @@ import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 
 
 contract Ticket is ERC721 {
-	
+
 	constructor() ERC721("Ticket", "Ticket") {}
 
 	uint private tokenId = 0;
 
-	function mint() external returns (uint) {
+	function mint(address recipient) external returns (uint) {
 		tokenId++;
-		_mint(msg.sender, tokenId);
+		_mint(recipient, tokenId);
 
 		return tokenId;
 	}

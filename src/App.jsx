@@ -5,6 +5,7 @@ import { places } from "./places";
 import { useState, useEffect } from "react";
 import { Modal, Button } from "react-bootstrap";
 import { hasMetaMask, connectToMetaMask, getConnectedAccount } from "./Metamask";
+import { num_max_tickets } from "./constants"
 
 function NFTButton(place, setShowModal) {
   let style = {
@@ -126,7 +127,7 @@ function App() {
           >
             <img src={stadium} alt="stadium" className="w-100" />
             <div className="w-100">
-              {places.map((place) => NFTButton(place, setShowModal))}
+              {places.slice(0, num_max_tickets).map((place) => NFTButton(place, setShowModal))}
             </div>
           </div>
         </div>

@@ -120,6 +120,7 @@ dist
 
 artifacts/
 cache/
-hardhat.config.js
+# hardhat.config.js
+config.js
 # package-lock.json
 # package.json

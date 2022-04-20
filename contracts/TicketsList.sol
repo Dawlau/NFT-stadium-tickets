@@ -13,52 +13,53 @@ contract TicketsList {
 	struct Ticket {
 		TicketStatus status;
 		address owner;
-		address token;
-		uint tokenId;
 		uint price;
 	}
 
-	uint private currentTicketId = 0;
 	mapping(uint => Ticket) private tickets;
 
-	function addTicket(address token, uint tokenId, uint price) external {
-		IERC721(token).transferFrom(msg.sender, address(this), tokenId);
+	IERC721 public ticketContract;
+
+	constructor(address _ticketContract) {
+		ticketContract = IERC721(_ticketContract);
+
+	}
+
+	function sellTicket(address sender, uint tokenId, uint price) external {
+		require(ticketContract.ownerOf(tokenId) == sender, "You can only sell your tickets :)");
 
 		Ticket memory ticket = Ticket(
 			TicketStatus.Open,
-			msg.sender,
-			token,
-			tokenId,
+			sender,
 			price
 		);
 
-		currentTicketId++;
-		tickets[currentTicketId] = ticket;
+		tickets[tokenId] = ticket;
 	}
 
 
-	function buyTicket(uint ticketId) external payable {
-		Ticket storage ticket = tickets[ticketId];
+	function buyTicket(address sender, uint ticketId) external payable {
+		Ticket memory ticket = tickets[ticketId];
 
-		require(msg.sender != ticket.owner, "You cannot buy your own ticket :)");
+		require(ticketContract.ownerOf(ticketId) == sender, "You cannot buy your own ticket :)");
 		require(ticket.status == TicketStatus.Open, "You cannot buy a sold ticket");
 		require(msg.value >= ticket.price, "Not enough payment");
 
 		ticket.status = TicketStatus.Sold;
 
-		IERC721(ticket.token).transferFrom(address(this), msg.sender, ticket.tokenId);
+		ticketContract.transferFrom(address(this), sender, ticketId);
 		payable(ticket.owner).transfer(ticket.price);
 	}
 
 
-	function refundTicket(uint ticketId) public {
-		Ticket storage ticket = tickets[ticketId];
+	function refundTicket(address sender, uint ticketId) public {
+		Ticket memory ticket = tickets[ticketId];
 
-		require(msg.sender == ticket.owner, "Only the owner can refund");
+		require(ticketContract.ownerOf(ticketId) == sender, "Only the owner can refund");
 		require(ticket.status == TicketStatus.Sold, "Ticket is not sold");
 
 		ticket.status = TicketStatus.Open;
-		IERC721(ticket.token).transferFrom(msg.sender, address(this), ticket.tokenId);
+		ticketContract.transferFrom(sender, address(this), ticketId);
 	}
 
 
