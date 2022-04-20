@@ -115,7 +115,7 @@ function App() {
         keyboard={false}
         centered
       >
-        <Modal.Header className="bg-warning" closeButton>
+        <Modal.Header className="bg-warning bg-gradient" closeButton>
           <Modal.Title>Ticket Informations</Modal.Title>
         </Modal.Header>
         <Modal.Body className="bg-light">
@@ -129,15 +129,15 @@ function App() {
           </div>
           <div>
             <label style={{...LabelStyle, display: 'block'}}>Ticket contract address: </label>
-            <textarea disabled style={{width: '22vw', minHeight: '6vh', maxHeight: '6vh', overflow: 'auto'}}>
-              {nftAddresses[selectedTicket.tokenId - 2]}
-            </textarea>
+            <textarea disabled style={{width: '22vw', minHeight: '6vh', maxHeight: '6vh', overflow: 'auto'}}
+              value={nftAddresses[selectedTicket.tokenId - 2] || '<Unavailable>'}
+            />
           </div>
           <div>
             <span style={LabelStyle}>price: </span>0.09 ETH
           </div>
         </Modal.Body>
-        <Modal.Footer className="bg-warning" style={{display: 'flex', flexFlow: 'column'}}>
+        <Modal.Footer className="bg-warning bg-gradient" style={{display: 'flex', flexFlow: 'column'}}>
           <Button variant="danger" className="ps-5 pe-5" onClick={() => setShowModal(false)}>
             Buy
           </Button>
