@@ -33,9 +33,9 @@ async function mintTicket() {
 			signedTransaction.rawTransaction,
 			function(err, hash) {
 				if (err) {
-					console.log("Something went wrong when submitting your transaction:", err)
+					console.log("Something has gone wrong when sending your transaction:", err)
 				} else {
-					console.log("The hash of your transaction is: ", hash, "\nCheck Alchemy's Mempool to view the status of your transaction!")
+					console.log("The hash of your transaction is: ", hash)
 				}
 			}
 		)
@@ -77,9 +77,9 @@ async function sellTicket(i) {
 		signedTransaction.rawTransaction,
 		function(err, hash) {
 			if (err) {
-				console.log("Something went wrong when submitting your transaction:", err)
+				console.log("Something has gone wrong when sending your transaction:", err)
 			} else {
-				console.log("The hash of your transaction is: ", hash, "\nCheck Alchemy's Mempool to view the status of your transaction!")
+				console.log("The hash of your transaction is: ", hash)
 			}
 		}
 	)
@@ -111,9 +111,9 @@ const buyTicket = async (i) => {
 		signedTransaction.rawTransaction,
 		function(err, hash) {
 			if (err) {
-				console.log("Something went wrong when submitting your transaction:", err)
+				console.log("Something has gone wrong when sending your transaction:", err)
 			} else {
-				console.log("The hash of your transaction is: ", hash, "\nCheck Alchemy's Mempool to view the status of your transaction!")
+				console.log("The hash of your transaction is: ", hash)
 			}
 		}
 	)
@@ -136,9 +136,9 @@ const refundTicket = async (i) => {
 		signedTransaction.rawTransaction,
 		function(err, hash) {
 			if (err) {
-				console.log("Something went wrong when submitting your transaction:", err)
+				console.log("Something has gone wrong when sending your transaction:", err)
 			} else {
-				console.log("The hash of your transaction is: ", hash, "\nCheck Alchemy's Mempool to view the status of your transaction!")
+				console.log("The hash of your transaction is: ", hash)
 			}
 		}
 	)
