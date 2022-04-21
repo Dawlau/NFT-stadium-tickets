@@ -57,7 +57,6 @@ const mintTickets = async () => {
 
 async function sellTicket(i) {
 
-	// to do approve transaction
 	// sell ticket
 	// address = nftAddresses[i - 1]
 
